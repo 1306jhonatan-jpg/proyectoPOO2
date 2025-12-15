@@ -110,7 +110,7 @@ public class GuiasModel extends Conexion{
     public int modificarGuia(Guias guia) {
         try {
             int filasAfectadas = 0;
-            String sql = "CALL sp_modificarGuia(?,?,?,?,?,?)";
+            String sql = "CALL sp_modificarGuia(?,?,?,?,?,?,?)";
             this.abrirConexion();
             cs = conexion.prepareCall(sql);
             cs.setInt(1, guia.getIdguia());

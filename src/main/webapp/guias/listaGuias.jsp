@@ -53,7 +53,6 @@ tbody tr:hover{
 
 </head>
 <body>
-
 <!-- Navbar -->
 <jsp:include page="/componentes/navbar.jsp"/>
 

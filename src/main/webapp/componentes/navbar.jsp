@@ -141,6 +141,13 @@ if(nombreUsuario == null) {
         </a>
     </div>
 
+	        <div class="nav-item">
+        <a class="<%= currentUrl.toLowerCase().contains("usuarios") ? "active" : "" %>"
+           href="<%=contextPath%>/UsuariosController?op=listar">
+           <i class="fas fa-user"></i> Usuarios
+        </a>
+    </div>
+    
     <div class="nav-item">
         <a class="<%= currentUrl.toLowerCase().contains("reserva") ? "active" : "" %>"
            href="<%=contextPath%>/listaGuias.jsp">
@@ -150,7 +157,7 @@ if(nombreUsuario == null) {
 
     <div class="nav-item">
         <a class="<%= currentUrl.toLowerCase().contains("tours") ? "active" : "" %>"
-           href="<%=contextPath%>/tours.jsp">
+           href="<%=contextPath%>/ToursController?op=listar">
            <i class="fas fa-map-marked-alt"></i> Tours
         </a>
     </div>
