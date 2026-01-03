@@ -1,17 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.List"%>
-<%@ page import="com.Explorapucallpa.beans.Tours"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.Explorapucallpa.beans.ClienteCargo" %>    
 <%
-    String contextPath = request.getContextPath();
-    List<Tours> lista = (List<Tours>) request.getAttribute("listaTours");
+String url = request.getContextPath();
+List<ClienteCargo> lista = (List<ClienteCargo>) request.getAttribute("listaClientes");
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Lista de Tours</title>
+<title>Gestión de Clientes</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
     rel="stylesheet"
@@ -50,18 +49,17 @@ tbody tr:hover{
     background:#25612a;
 }
 </style>
-
 </head>
 <body>
 <!-- Navbar -->
-<jsp:include page="/componentes/navbar.jsp" />
+<jsp:include page="/componentes/navbar.jsp"/>
 
 <div class="content-container">
 
-        <h2 class="text-center" class="mb-4">
-        <i class="fa-solid fa-route"></i> Gestión de Tours
-        </h2>
-
+		<h2 class="text-center" class="mb-4">
+        <i class="fas fa-users"></i> Listado de Clientes
+    </h2>
+    
        <!-- Mensajes de sesión -->
     <%
     String mensaje = (String) session.getAttribute("mensaje");
@@ -77,95 +75,73 @@ tbody tr:hover{
     }
     %>
     
-    <!-- Botón Nuevo Usuario -->
-    <button class="btn btn-success mb-3" onclick="modalTour.abrir('nuevo')">
-        <i class="fas fa-plus"></i> Nuevo Tour
+        <!-- Botón Nuevo Cliente -->
+    <button class="btn btn-success mb-3" onclick="modalCliente.abrir('nuevo')">
+        <i class="fas fa-plus"></i> Nuevo Cliente
     </button>
-
-    <!-- Tabla -->
+    
     <div class="table-responsive">
-<table class="table table-bordered table-striped table-hover">
-        <thead class="table-success">
-                    <tr>
-                        <th><i class="fas fa-hashtag"></i> ID</th>
-                        <th><i class="fas fa-route"></i> Tour</th>
-                        <th><i class="fas fa-align-left"></i> Descripcion</th>
-                        <th><i class="fas fa-concierge-bell"></i> Servicios</th>
-                        <th><i class="fas fa-clock"></i> Duracion</th>
-                        <th><i class="fas fa-toggle-on"></i> Estado</th>
-                        <th><i class="fas fa-calendar-days"></i> Fecha Creacion</th>
-                        <th class="text-center"><i class="fas fa-cog"></i> Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                <% 
-                List<Tours> listaTours = (List<Tours>) request.getAttribute("listaTours");
-                if (listaTours != null && !listaTours.isEmpty()) {
-                       for (Tours t : listaTours) { %>
-
-                    <tr>
-                        <td><code><%= t.getIdTours() %></code></td>
-                        <td><strong><%= t.getNombreTours() %></strong></td>
-                         <td><%= t.getDescripcion() %></td>
-                          <td><%= t.getServicios() %></td>
-                        <td><%= t.getDuracionTours() %></td>
-
-                        <td>
-                            <span class="badge <%= "Activo".equalsIgnoreCase(t.getEstado()) 
-                                ? "bg-success" : "bg-secondary" %>">
-                                <%= t.getEstado() %>
-                            </span>
-                        </td>
-                        <td><%= t.getFechaCreacionTours() %></td>
-
-                        <td class="text-center">
-
-                            <button class="btn btn-warning btn-sm"
-                            onclick="modalTour.abrir('editar',<%=t.getIdTours()%>)"
-                            title="Modificar Tour">
+    <table class="table table-bordered table-striped table-hover">
+    	<thead class="table-success">
+    		<tr>
+    			<th><i class="fas fa-hashtag"></i> ID</th>
+                <th><i class="fas fa-user"></i> Nombre Completo</th>
+                <th><i class="fas fa-user"></i> Edad</th>
+                <th><i class="fas fa-id-card"></i> DNI</th>
+                <th><i class="fas fa-phone"></i> Celular</th>
+                <th><i class="fas fa-envelope"></i> Correo</th>
+                <th class="text-center"><i class="fas fa-cog"></i> Operaciones</th>
+    		</tr>
+    	</thead>
+    	
+    	<tbody>
+    	<%
+    	List<ClienteCargo> listaClientes = (List<ClienteCargo>) request.getAttribute("listaClientes");
+    	if(listaClientes != null && !listaClientes.isEmpty()){
+    		for(ClienteCargo c : listaClientes){ %>
+    			<tr>
+    				<td><code><%=c.getIdCliente() %></code></td>
+    				<td><strong><%=c.getNombre()%> <%=c.getApellido()%></strong></td>
+    				<td><%=c.getEdad() %></td>
+    				<td><%=c.getDni() %></td>
+    				<td><%=c.getCelular() %></td>
+    				<td><%=c.getCorreo() %></td>
+    				<td class="text-center">
+    					<div class="btn-group" role="group">
+    					<button class="btn btn-warning btn-sm"
+                            onclick="modalCliente.abrir('editar',<%=c.getIdCliente()%>)"
+                            title="Modificar Cliente">
                         <i class="fa fa-edit"></i>
                     </button>
-
-                            <a href="<%=contextPath%>/ToursController?op=desactivar&id=<%=t.getIdTours()%>"
-                               class="btn btn-sm btn-secondary"
-                               onclick="return confirm('¿Desactivar este tour?')">
-                                <i class="fa fa-ban"></i>
-                            </a>
-
-                            <button class="btn btn-danger btn-sm"
-                            onclick="eliminar(<%=t.getIdTours()%>)"
-                            title="Eliminar Tour">
+                    <button class="btn btn-danger btn-sm"
+                            onclick="eliminar(<%=c.getIdCliente()%>)"
+                            title="Eliminar Cliente">
                         <i class="fa fa-trash"></i>
                     </button>
-
-                        </td>
-                    </tr>
-
-                <%   }
-                   } else { %>
-
-                    <tr>
-                        <td colspan="8" class="text-center text-muted">
-                            No hay tours registrados
-                        </td>
-                    </tr>
-
-                <% } %>
-
-                </tbody>
-            </table>
-        </div>
+    					</div>
+    				</td>
+    			</tr>
+    		<%}
+    			} else{%>
+    			<tr>
+    				<td colspan="7" class="text-center text-muted">
+                        <i class="fas fa-inbox"></i> No hay Clientes registrados
+                    </td>		
+    			</tr>
+    			<%} %>
+    	</tbody>
+    </table>
     </div>
+</div>
 
 <!-- Modal -->
-<div class="modal fade" id="modalTour" tabindex="-1"
+<div class="modal fade" id="modalCliente" tabindex="-1"
 	aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 	 <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
-            <h5 class="modal-title" id="modalTourLabel">
-                    <i class="fas fa-user-edit"></i> Tour
+            <h5 class="modal-title" id="modalClienteLabel">
+                    <i class="fas fa-user-edit"></i> Cliente
                 </h5>
                 <button type="button" class="btn-close btn-close-white"
                     data-bs-dismiss="modal" id="btnCerrarModal"></button>
@@ -190,28 +166,28 @@ tbody tr:hover{
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
     
-    <script>
-const modalTour={
+<script>
+const modalCliente={
 		 instance: null,
 		 procesando: false,
 		    
 		 init() {
-		     const modalElement = document.getElementById('modalTour');
+		     const modalElement = document.getElementById('modalCliente');
 		     this.instance = new bootstrap.Modal(modalElement);        
 		},
 		
 		abrir(tipo, id=null){
 			this.resetear();
-			let titulo = 'Tour';
-			if(tipo === 'nuevo') titulo = 'Nuevo Tour';
-			else if(tipo === 'editar') titulo = 'Editar Tour';
+			let titulo = 'Cliente';
+			if(tipo === 'nuevo') titulo = 'Nuevo Cliente';
+			else if(tipo === 'editar') titulo = 'Editar Cliente';
 			
-			document.getElementById('modalTourLabel').innerHTML = '<i class="fas fa-user-edit"></i> ' + titulo;
+			document.getElementById('modalClienteLabel').innerHTML = '<i class="fas fa-user-edit"></i> ' + titulo;
 			
 			this.mostrarSpinner();
 	        this.instance.show();
 	        
-	        let fetchUrl = '<%=contextPath%>/ToursController?op=' + tipo + '&modal=true';
+	        let fetchUrl = '<%=url%>/ClientesCargoController?op=' + tipo + '&modal=true';
 	        if(id) fetchUrl += '&id=' + id;
 	        
 	        fetch(fetchUrl)
@@ -275,7 +251,7 @@ const modalTour={
 	            formData.set('op', operacion + 'Ajax');
 	        }
 	        
-	        const urlBase = '<%=contextPath%>/ToursController';
+	        const urlBase = '<%=url%>/ClientesCargoController';
 	        
 	        fetch(urlBase, {
 	            method: 'POST',
@@ -298,7 +274,7 @@ const modalTour={
 	                this.mostrarMensaje(data.mensaje, 'success');
 	                setTimeout(() => {
 	                    this.instance.hide();
-	                    location.href = '<%=contextPath%>/ToursController?op=listar';
+	                    location.href = '<%=url%>/ClientesCargoController?op=listar';
 	                }, 1500);
 	            } else {
 	                this.mostrarMensaje(data.mensaje, 'danger');
@@ -355,14 +331,15 @@ const modalTour={
 };
 
 function eliminar(id) {
-    if (confirm('¿Está seguro de eliminar este Tour? Esta acción no se puede deshacer.')) {
-        window.location.href = '<%=contextPath%>/ToursController?op=eliminar&id=' + id;
+    if (confirm('¿Está seguro de eliminar este Cliente? Esta acción no se puede deshacer.')) {
+        window.location.href = '<%=url%>/ClientesCargoController?op=eliminar&id=' + id;
     }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    modalTour.init();
+	modalCliente.init();
 });
 </script>
+
 </body>
 </html>

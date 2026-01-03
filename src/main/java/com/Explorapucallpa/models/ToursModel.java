@@ -29,9 +29,9 @@ public class ToursModel extends Conexion{
             	tour.setNombreTours(rs.getString("nombre_tours"));
             	tour.setDescripcion(rs.getString("descripcion"));
             	tour.setServicios(rs.getString("servicios"));
-            	tour.setFechaTours(rs.getDate("fecha_tours"));
-            	tour.setDuracionTours(rs.getString("duracion_tours"));
+               	tour.setDuracionTours(rs.getString("duracion_tours"));
             	tour.setEstado(rs.getString("estado"));
+            	tour.setFechaCreacionTours(rs.getDate("fecha_creacion_tours"));
             	tours.add(tour);
             	
             }
@@ -50,15 +50,14 @@ public class ToursModel extends Conexion{
     public int insertarTour(Tours tour ) {
     	try {
 			int filasAfectadas=0;
-			String sql = "CALL sp_insertarTours(?,?,?,?,?,?)";
+			String sql = "CALL sp_insertarTours(?,?,?,?,?)";
 			this.abrirConexion();
 			cs = conexion.prepareCall(sql);
 			cs.setString(1, tour.getNombreTours());
 			cs.setString(2, tour.getDescripcion());
 			cs.setString(3, tour.getServicios());
-			cs.setDate(4, tour.getFechaTours());
-			cs.setString(5, tour.getDuracionTours());
-			cs.setString(6, tour.getEstado());
+			cs.setString(4, tour.getDuracionTours());
+			cs.setString(5, tour.getEstado());
 			filasAfectadas = cs.executeUpdate();
 			this.cerrarConexion();
 			return filasAfectadas;
@@ -87,9 +86,9 @@ public class ToursModel extends Conexion{
             	tour.setNombreTours(rs.getString("nombre_tours"));
             	tour.setDescripcion(rs.getString("descripcion"));
             	tour.setServicios(rs.getString("servicios"));
-            	tour.setFechaTours(rs.getDate("fecha_tours"));
             	tour.setDuracionTours(rs.getString("duracion_tours"));
             	tour.setEstado(rs.getString("estado"));
+            	tour.setFechaCreacionTours(rs.getDate("fecha_creacion_tours"));
 			}
 			this.cerrarConexion();
 		} catch (Exception e) {
@@ -107,16 +106,15 @@ public class ToursModel extends Conexion{
     public int modificarTour(Tours tour) {
     	try {
     		int filasAfectadas=0;
-    		String sql = "CALL sp_modificarTours(?,?,?,?,?,?,?)";
+    		String sql = "CALL sp_modificarTours(?,?,?,?,?,?)";
     		this.abrirConexion();
     		cs = conexion.prepareCall(sql);
     		cs.setInt(1, tour.getIdTours());
     		cs.setString(2, tour.getNombreTours());
 			cs.setString(3, tour.getDescripcion());
 			cs.setString(4, tour.getServicios());
-			cs.setDate(5, tour.getFechaTours());
-			cs.setString(6, tour.getDuracionTours());
-			cs.setString(7, tour.getEstado());
+			cs.setString(5, tour.getDuracionTours());
+			cs.setString(6, tour.getEstado());
 			filasAfectadas = cs.executeUpdate();
 			this.cerrarConexion();
 			return filasAfectadas;

@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -129,10 +128,7 @@ public class ToursController extends HttpServlet {
 			tour.setNombreTours(request.getParameter("nombreTours"));
 			tour.setDescripcion(request.getParameter("descripcion"));
 			tour.setServicios(request.getParameter("servicios"));
-			tour.setFechaTours(Date.valueOf(request.getParameter("fechaTours")));
-			tour.setDuracionTours(request.getParameter("duracionTours"));
-			tour.setEstado(request.getParameter("estado"));
-			
+			tour.setDuracionTours(request.getParameter("duracionTours"));			
 			int resultado = modelo.insertarTour(tour);
 			if (esAjax) {
 				enviarJSON(response, resultado > 0,
@@ -170,7 +166,6 @@ public class ToursController extends HttpServlet {
 			tour.setNombreTours(request.getParameter("nombreTours"));
 			tour.setDescripcion(request.getParameter("descripcion"));
 			tour.setServicios(request.getParameter("servicios"));
-			tour.setFechaTours(Date.valueOf(request.getParameter("fechaTours")));
 			tour.setDuracionTours(request.getParameter("duracionTours"));
 			tour.setEstado(request.getParameter("estado"));
 			

@@ -58,7 +58,7 @@ tbody tr:hover{
 
 <div class="content-container">
     
-    <h2 class="mb-4">
+    <h2 class="text-center" class="mb-4">
         <i class="fas fa-user-shield"></i> Listado de Guias
     </h2>
 

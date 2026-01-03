@@ -40,7 +40,7 @@ body {
 <jsp:include page="/componentes/navbar.jsp" />
 
 <div class="content-container">
-    <h2 class="mb-4">
+    <h2 class="text-center" class="mb-4">
         <i class="fas fa-user-shield"></i> Gestión de Usuarios
     </h2>
 

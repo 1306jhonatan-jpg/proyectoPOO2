@@ -124,7 +124,7 @@ if(nombreUsuario == null) {
 
 <div class="sidebar">
 
-    <!-- LOGO: usando la imagen subida -->
+    <!-- LOGO-->
     <div class="logo-wrapper">
         <img class="logo-img" src="<%=contextPath%>/img/logo_selva (1).png" alt="Explora Pucallpa">
     </div>
@@ -150,7 +150,7 @@ if(nombreUsuario == null) {
     
     <div class="nav-item">
         <a class="<%= currentUrl.toLowerCase().contains("reserva") ? "active" : "" %>"
-           href="<%=contextPath%>/listaGuias.jsp">
+           href="<%=contextPath%>/ReservaController?op=listar">
            <i class="fas fa-calendar-check"></i> Reserva
         </a>
     </div>
@@ -164,7 +164,7 @@ if(nombreUsuario == null) {
 
     <div class="nav-item">
         <a class="<%= currentUrl.toLowerCase().contains("clientes") ? "active" : "" %>"
-           href="<%=contextPath%>/clientes.jsp">
+           href="<%=contextPath%>/ClientesCargoController?op=listar">
            <i class="fas fa-users"></i> Clientes
         </a>
     </div>

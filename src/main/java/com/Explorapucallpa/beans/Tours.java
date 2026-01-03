@@ -7,20 +7,20 @@ public class Tours {
     private String nombreTours;
     private String descripcion;
     private String servicios;
-    private Date fechaTours;
+    private Date fechaCreacionTours;
     private String duracionTours;
     private String estado;
 	public Tours() {
 		super();
 	}
-	public Tours(int idTours, String nombreTours, String descripcion, String servicios, Date fechaTours,
+	public Tours(int idTours, String nombreTours, String descripcion, String servicios, Date fechaCreacionTours,
 			String duracionTours, String estado) {
 		super();
 		this.idTours = idTours;
 		this.nombreTours = nombreTours;
 		this.descripcion = descripcion;
 		this.servicios = servicios;
-		this.fechaTours = fechaTours;
+		this.fechaCreacionTours = fechaCreacionTours;
 		this.duracionTours = duracionTours;
 		this.estado = estado;
 	}
@@ -48,11 +48,11 @@ public class Tours {
 	public void setServicios(String servicios) {
 		this.servicios = servicios;
 	}
-	public Date getFechaTours() {
-		return fechaTours;
+	public Date getFechaCreacionTours() {
+		return fechaCreacionTours;
 	}
-	public void setFechaTours(Date fechaTours) {
-		this.fechaTours = fechaTours;
+	public void setFechaCreacionTours(Date fechaCreacionTours) {
+		this.fechaCreacionTours = fechaCreacionTours;
 	}
 	public String getDuracionTours() {
 		return duracionTours;
@@ -66,6 +66,7 @@ public class Tours {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
+	
     
     
 }
