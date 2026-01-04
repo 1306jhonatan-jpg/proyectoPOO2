@@ -46,6 +46,10 @@ public class ToursController extends HttpServlet {
 		case "listar":
 			listar(request, response);
 			break;
+			
+		case "listarTours":
+			listarTours(request, response);
+			break;	
 
 		case "nuevo":
 			cargarFormularioNuevo(request, response);
@@ -84,6 +88,16 @@ public class ToursController extends HttpServlet {
 			response.setContentType("text/html; charset=UTF-8");
 			request.setAttribute("listaTours", modelo.listarTours());
 			request.getRequestDispatcher("/tours/listaTours.jsp").forward(request, response);
+		} catch (Exception e) {
+			Logger.getLogger(ToursController.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
+	
+	private void listarTours(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			response.setContentType("text/html; charset=UTF-8");
+			request.setAttribute("listaTours", modelo.listarTours());
+			request.getRequestDispatcher("/tours/vistaCarrusel.jsp").forward(request, response);
 		} catch (Exception e) {
 			Logger.getLogger(ToursController.class.getName()).log(Level.SEVERE, null, e);
 		}
@@ -128,7 +142,8 @@ public class ToursController extends HttpServlet {
 			tour.setNombreTours(request.getParameter("nombreTours"));
 			tour.setDescripcion(request.getParameter("descripcion"));
 			tour.setServicios(request.getParameter("servicios"));
-			tour.setDuracionTours(request.getParameter("duracionTours"));			
+			tour.setDuracionTours(request.getParameter("duracionTours"));
+			tour.setImagen(request.getParameter("imagen"));
 			int resultado = modelo.insertarTour(tour);
 			if (esAjax) {
 				enviarJSON(response, resultado > 0,
@@ -168,7 +183,7 @@ public class ToursController extends HttpServlet {
 			tour.setServicios(request.getParameter("servicios"));
 			tour.setDuracionTours(request.getParameter("duracionTours"));
 			tour.setEstado(request.getParameter("estado"));
-			
+			tour.setImagen(request.getParameter("imagen"));	
 			int resultado = modelo.modificarTour(tour);
 			if (esAjax) {
 				enviarJSON(response, resultado > 0,

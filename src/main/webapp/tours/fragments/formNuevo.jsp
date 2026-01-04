@@ -55,6 +55,18 @@ String url = request.getContextPath() + "/";
         </div>
     </div>
     
+        <div class="row">
+        <div class="col-md-12 mb-3">
+            <label for="imagen" class="form-label">
+               <i class="fas fa-phone"></i> Imagen del Tour <span class="text-danger">*</span>
+            </label>
+            <input type="text" class="form-control" name="imagen"
+                   placeholder="imagen.jpg"
+                   required>
+                   <div class="invalid-feedback">Campo obligatorio</div>
+        </div>
+    </div>
+    
     <div class="alert alert-info" role="alert">
         <i class="fas fa-info-circle"></i> 
         <strong>Nota:</strong> El Tour se creará con estado ACTIVO por defecto.

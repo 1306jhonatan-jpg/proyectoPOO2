@@ -44,40 +44,29 @@ List<ClienteCargo> listaClientes = (List<ClienteCargo>) request.getAttribute("li
             <label>Precio Adulto (S/.)</label>
             <input type="number" class="form-control"
                    name="precioAdulto" id="precioAdulto"
-                   value="120" readonly>
+                   value="0" required>
         </div>
         <div class="col-md-6">
             <label>Precio Niño (S/.)</label>
             <input type="number" class="form-control"
                    name="precioNino" id="precioNino"
-                   value="80" readonly>
+                   value="0" required>
         </div>
     </div>
 
     <!-- TOTAL -->
     <div class="alert alert-success mt-3">
-        <h5>Total: S/. <span id="total"></span></h5>
+        <h5>Total: SE VERA AL FINALIZAR LA RESERVA <span id="total" oninput="calcularTotal()"></span></h5>
     </div>
 
     <!-- TOUR -->
-    <div class="mt-3">
-        <label class="form-label">Tour</label>
-        <select class="form-select" name="toursIdtours" required>
-            <option value="">Seleccione un Tour...</option>
-            <% 
-            if(listaTours !=null && !listaTours.isEmpty()){
-            for (Tours t : listaTours) { %>
-                <option value="<%=t.getIdTours()%>">
-                    <%=t.getNombreTours()%>
-                </option>
-            <% } 
-            } else {%>
-                <option value="" disabled>No hay tours disponibles</option>
-			<%
-				}
-					%>
-        </select>
-    </div>
+<input type="hidden" name="toursIdtours" id="toursIdtours">
+
+<div class="mb-3">
+    <label class="form-label">Tour seleccionado</label>
+    <input type="text" id="nombreTour" class="form-control" readonly>
+</div>
+
 
     <!-- GUIA -->
     <div class="mt-3">

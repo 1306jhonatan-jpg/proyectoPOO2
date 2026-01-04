@@ -60,6 +60,18 @@ if(tour == null) {
         </div>
     </div>
         
+        	<div class="row">
+        <div class="col-md-12 mb-3">
+            <label for="imagen" class="form-label">
+                <i class="fas fa-envelope"></i> Imagen del Tour
+            </label>
+            <input type="text" class="form-control" name="imagen" id="imagen" 
+                value="<%=tour.getImagen() != null ? tour.getImagen() : ""%>" 
+                placeholder="imagen.jpg">
+            <div class="invalid-feedback">Campo obligatorio</div>
+        </div>
+    </div>
+        
         <div class="col-md-6 mb-3">
             <label for="estado" class="form-label">
                 <i class="fas fa-toggle-on"></i> Estado <span class="text-danger">*</span>

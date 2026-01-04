@@ -150,7 +150,7 @@ if(nombreUsuario == null) {
     
     <div class="nav-item">
         <a class="<%= currentUrl.toLowerCase().contains("reserva") ? "active" : "" %>"
-           href="<%=contextPath%>/ReservaController?op=listar">
+           href="<%=contextPath%>/ToursController?op=listarTours">
            <i class="fas fa-calendar-check"></i> Reserva
         </a>
     </div>

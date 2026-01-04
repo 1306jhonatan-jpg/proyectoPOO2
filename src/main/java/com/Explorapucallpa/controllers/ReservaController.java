@@ -118,6 +118,12 @@ public class ReservaController extends HttpServlet {
 			request.getRequestDispatcher(jsp).forward(request, response);
 		} catch (Exception e) {
 			Logger.getLogger(ReservaController.class.getName()).log(Level.SEVERE, null, e);
+			try {
+	            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+	            response.getWriter().print("Error al cargar formulario de reserva");
+	        } catch (IOException ex) {
+	            ex.printStackTrace();
+	        }
 		}
 	}
 	

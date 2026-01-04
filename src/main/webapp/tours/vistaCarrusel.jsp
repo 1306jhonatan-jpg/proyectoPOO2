@@ -1,18 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.List"%>
-<%@ page import="com.Explorapucallpa.beans.Tours"%>
-
-<%
-    String contextPath = request.getContextPath();
-    List<Tours> lista = (List<Tours>) request.getAttribute("listaTours");
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ page import="java.util.List"%>
+<%@ page import="com.Explorapucallpa.beans.*"%>
+    <% String contextPath = request.getContextPath(); %>
+    <%
+List<Tours> listaTours = (List<Tours>) request.getAttribute("listaTours");
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Lista de Tours</title>
-
+<title>Tours disponibles</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
     rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
@@ -50,19 +48,42 @@ tbody tr:hover{
     background:#25612a;
 }
 </style>
+<style>
+.card-tour {
+    height: 580px;
+    border-radius: 12px;
+    overflow: hidden;
+}
 
+.card-tour img {
+    height: 220px;
+    object-fit: cover;
+}
+
+.card-body-tour {
+    height: 230px;
+    overflow: hidden;
+}
+
+.card-body-tour p {
+    font-size: 14px;
+}
+
+.card-footer-tour {
+    border-top: 1px solid #eee;
+}
+</style>
 </head>
 <body>
 <!-- Navbar -->
 <jsp:include page="/componentes/navbar.jsp" />
-
 <div class="content-container">
 
         <h2 class="text-center" class="mb-4">
-        <i class="fa-solid fa-route"></i> Gestión de Tours
+        <i class="fa-solid fa-map-marked-alt"></i> Tours Disponibles
         </h2>
 
-       <!-- Mensajes de sesión -->
+      <!-- Mensajes de sesión -->
     <%
     String mensaje = (String) session.getAttribute("mensaje");
     if (mensaje != null) {
@@ -78,95 +99,87 @@ tbody tr:hover{
     %>
     
     <!-- Botón Nuevo Usuario -->
-    <button class="btn btn-success mb-3" onclick="modalTour.abrir('nuevo')">
-        <i class="fas fa-plus"></i> Nuevo Tour
-    </button>
+    <a class="btn btn-success mb-3"
+   href="<%=request.getContextPath()%>/ReservaController?op=listar">
+    <i class="fas fa-calendar"></i> Gestión de Reservas
+</a>
+<div class="container mt-4">
 
-    <!-- Tabla -->
-    <div class="table-responsive">
-<table class="table table-bordered table-striped table-hover">
-        <thead class="table-success">
-                    <tr>
-                        <th><i class="fas fa-hashtag"></i> ID</th>
-                        <th><i class="fas fa-route"></i> Tour</th>
-                        <th><i class="fas fa-align-left"></i> Descripcion</th>
-                        <th><i class="fas fa-concierge-bell"></i> Servicios</th>
-                        <th><i class="fas fa-clock"></i> Duracion</th>
-                        <th><i class="fas fa-toggle-on"></i> Estado</th>
-                        <th><i class="fas fa-calendar-days"></i> Fecha Creacion</th>
-                        <th><i class="fas fa-imagen"></i> Imagen</th>
-                        <th class="text-center"><i class="fas fa-cog"></i> Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
+    <div class="row g-4">
+<% if (listaTours == null || listaTours.isEmpty()) { %>
+    <div class="alert alert-warning">No hay tours disponibles</div>
+<% } else { 
+    for (Tours t : listaTours) { %>
 
-                <% 
-                List<Tours> listaTours = (List<Tours>) request.getAttribute("listaTours");
-                if (listaTours != null && !listaTours.isEmpty()) {
-                       for (Tours t : listaTours) { %>
 
-                    <tr>
-                        <td><code><%= t.getIdTours() %></code></td>
-                        <td><strong><%= t.getNombreTours() %></strong></td>
-                         <td><%= t.getDescripcion() %></td>
-                          <td><%= t.getServicios() %></td>
-                        <td><%= t.getDuracionTours() %></td>
+        <div class="col-md-4">
+            <div class="card shadow-sm card-tour">
 
-                        <td>
-                            <span class="badge <%= "Activo".equalsIgnoreCase(t.getEstado()) 
-                                ? "bg-success" : "bg-secondary" %>">
-                                <%= t.getEstado() %>
-                            </span>
-                        </td>
-                        <td><%= t.getFechaCreacionTours() %></td>
-						<td><%= t.getImagen() %></td>
-                        <td class="text-center">
+                <!-- IMAGEN -->
+                <img 
+  src="<%=request.getContextPath()%>/img/<%= 
+        (t.getImagen() != null && !t.getImagen().isEmpty()) 
+        ? t.getImagen() 
+        : "default.jpg" 
+  %>"
+  class="card-img-top"
+  style="height:220px; object-fit:cover;"
+>
+                
 
-                            <button class="btn btn-warning btn-sm"
-                            onclick="modalTour.abrir('editar',<%=t.getIdTours()%>)"
-                            title="Modificar Tour">
-                        <i class="fa fa-edit"></i>
-                    </button>
+                <!-- INFO -->
+                <div class="card-body card-body-tour">
 
-                            <a href="<%=contextPath%>/ToursController?op=desactivar&id=<%=t.getIdTours()%>"
-                               class="btn btn-sm btn-secondary"
-                               onclick="return confirm('¿Desactivar este tour?')">
-                                <i class="fa fa-ban"></i>
-                            </a>
+                    <h5 class="card-title">
+                        <%=t.getIdTours()%>° <%=t.getNombreTours()%>
+                    </h5>
 
-                            <button class="btn btn-danger btn-sm"
-                            onclick="eliminar(<%=t.getIdTours()%>)"
-                            title="Eliminar Tour">
-                        <i class="fa fa-trash"></i>
-                    </button>
+                    <p class="text-muted">
+                        <%=t.getDescripcion()%>
+                    </p>
 
-                        </td>
-                    </tr>
+                    <p>
+                        <strong>Servicios:</strong><br>
+                        <%=t.getServicios()%>
+                    </p>
 
-                <%   }
-                   } else { %>
+                    <p class="mb-1">
+                        <i class="fa-regular fa-clock"></i>
+                        <strong>Duración:</strong>
+                        <%=t.getDuracionTours()%>
+                    </p>
 
-                    <tr>
-                        <td colspan="8" class="text-center text-muted">
-                            No hay tours registrados
-                        </td>
-                    </tr>
+                    <span class="badge bg-success">
+                        <%=t.getEstado()%>
+                    </span>
 
-                <% } %>
+                </div>
 
-                </tbody>
-            </table>
+                <!-- BOTÓN -->
+                <div class="card-footer card-footer-tour bg-white">
+                   <button 
+    class="btn btn-success w-100"
+    onclick="modalReserva.abrir('nuevo', <%=t.getIdTours()%>, '<%=t.getNombreTours()%>')">
+    <i class="fa-solid fa-calendar-plus"></i> Reservar
+</button>
+
+                </div>
+
+            </div>
         </div>
-    </div>
 
-<!-- Modal -->
-<div class="modal fade" id="modalTour" tabindex="-1"
+    <% } } %>
+    </div>
+</div>
+    </div>
+    <!-- Modal -->
+<div class="modal fade" id="modalReserva" tabindex="-1"
 	aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 	 <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
-            <h5 class="modal-title" id="modalTourLabel">
-                    <i class="fas fa-user-edit"></i> Tour
+            <h5 class="modal-title" id="modalReservaLabel">
+                    <i class="fas fa-user-edit"></i> Reserva
                 </h5>
                 <button type="button" class="btn-close btn-close-white"
                     data-bs-dismiss="modal" id="btnCerrarModal"></button>
@@ -191,29 +204,33 @@ tbody tr:hover{
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
     
-    <script>
-const modalTour={
+<script>
+const modalReserva={
 		 instance: null,
 		 procesando: false,
 		    
 		 init() {
-		     const modalElement = document.getElementById('modalTour');
+		     const modalElement = document.getElementById('modalReserva');
 		     this.instance = new bootstrap.Modal(modalElement);        
 		},
 		
-		abrir(tipo, id=null){
+		abrir(tipo, idTour=null, nombreTour=null){
 			this.resetear();
-			let titulo = 'Tour';
-			if(tipo === 'nuevo') titulo = 'Nuevo Tour';
-			else if(tipo === 'editar') titulo = 'Editar Tour';
+			let titulo = 'Reserva';
+			if(tipo === 'nuevo') titulo = 'Nueva Reserva';
+			else if(tipo === 'editar') titulo = 'Editar Reserva';
 			
-			document.getElementById('modalTourLabel').innerHTML = '<i class="fas fa-user-edit"></i> ' + titulo;
+			document.getElementById('modalReservaLabel').innerHTML = '<i class="fas fa-user-edit"></i> ' + titulo;
 			
 			this.mostrarSpinner();
 	        this.instance.show();
+	        this.tourSeleccionado = {
+	        	    id: idTour,
+	        	    nombre: nombreTour
+	        	};
 	        
-	        let fetchUrl = '<%=contextPath%>/ToursController?op=' + tipo + '&modal=true';
-	        if(id) fetchUrl += '&id=' + id;
+	        let fetchUrl = '<%=contextPath%>/ReservaController?op=' + tipo + '&modal=true';
+	        //if(id) fetchUrl += '&id=' + id;
 	        
 	        fetch(fetchUrl)
             .then(response => response.text())
@@ -253,7 +270,17 @@ const modalTour={
 	        if(!form || form.dataset.listenerAdded === 'true') return;
 	        
 	        form.dataset.listenerAdded = 'true';
+	     // Cargar datos del tour en el formulario
+	        if(this.tourSeleccionado){
+	            const inputTourId = form.querySelector('#toursIdtours');
+	            const inputNombreTour = form.querySelector('#nombreTour');
+
+	            if(inputTourId) inputTourId.value = this.tourSeleccionado.id;
+	            if(inputNombreTour) inputNombreTour.value = this.tourSeleccionado.nombre;
+	        }
+
 	        form.addEventListener('submit', (e) => this.enviarFormulario(e, form));
+
 	    },
 	    
 	    enviarFormulario(e, form) {
@@ -276,7 +303,7 @@ const modalTour={
 	            formData.set('op', operacion + 'Ajax');
 	        }
 	        
-	        const urlBase = '<%=contextPath%>/ToursController';
+	        const urlBase = '<%=contextPath%>/ReservaController';
 	        
 	        fetch(urlBase, {
 	            method: 'POST',
@@ -299,7 +326,7 @@ const modalTour={
 	                this.mostrarMensaje(data.mensaje, 'success');
 	                setTimeout(() => {
 	                    this.instance.hide();
-	                    location.href = '<%=contextPath%>/ToursController?op=listar';
+	                    location.href = '<%=contextPath%>/ReservaController?op=listar';
 	                }, 1500);
 	            } else {
 	                this.mostrarMensaje(data.mensaje, 'danger');
@@ -355,14 +382,8 @@ const modalTour={
 	    }
 };
 
-function eliminar(id) {
-    if (confirm('¿Está seguro de eliminar este Tour? Esta acción no se puede deshacer.')) {
-        window.location.href = '<%=contextPath%>/ToursController?op=eliminar&id=' + id;
-    }
-}
-
 document.addEventListener('DOMContentLoaded', function() {
-    modalTour.init();
+    modalReserva.init();
 });
 </script>
 </body>

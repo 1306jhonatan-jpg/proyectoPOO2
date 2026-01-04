@@ -32,6 +32,7 @@ public class ToursModel extends Conexion{
                	tour.setDuracionTours(rs.getString("duracion_tours"));
             	tour.setEstado(rs.getString("estado"));
             	tour.setFechaCreacionTours(rs.getDate("fecha_creacion_tours"));
+            	tour.setImagen(rs.getString("imagen"));
             	tours.add(tour);
             	
             }
@@ -50,7 +51,7 @@ public class ToursModel extends Conexion{
     public int insertarTour(Tours tour ) {
     	try {
 			int filasAfectadas=0;
-			String sql = "CALL sp_insertarTours(?,?,?,?,?)";
+			String sql = "CALL sp_insertarTours(?,?,?,?,?,?)";
 			this.abrirConexion();
 			cs = conexion.prepareCall(sql);
 			cs.setString(1, tour.getNombreTours());
@@ -58,6 +59,7 @@ public class ToursModel extends Conexion{
 			cs.setString(3, tour.getServicios());
 			cs.setString(4, tour.getDuracionTours());
 			cs.setString(5, tour.getEstado());
+			cs.setString(6, tour.getImagen());
 			filasAfectadas = cs.executeUpdate();
 			this.cerrarConexion();
 			return filasAfectadas;
@@ -89,6 +91,7 @@ public class ToursModel extends Conexion{
             	tour.setDuracionTours(rs.getString("duracion_tours"));
             	tour.setEstado(rs.getString("estado"));
             	tour.setFechaCreacionTours(rs.getDate("fecha_creacion_tours"));
+            	tour.setImagen(rs.getString("imagen"));
 			}
 			this.cerrarConexion();
 		} catch (Exception e) {
@@ -106,7 +109,7 @@ public class ToursModel extends Conexion{
     public int modificarTour(Tours tour) {
     	try {
     		int filasAfectadas=0;
-    		String sql = "CALL sp_modificarTours(?,?,?,?,?,?)";
+    		String sql = "CALL sp_modificarTours(?,?,?,?,?,?,?)";
     		this.abrirConexion();
     		cs = conexion.prepareCall(sql);
     		cs.setInt(1, tour.getIdTours());
@@ -115,6 +118,7 @@ public class ToursModel extends Conexion{
 			cs.setString(4, tour.getServicios());
 			cs.setString(5, tour.getDuracionTours());
 			cs.setString(6, tour.getEstado());
+			cs.setString(7, tour.getImagen());
 			filasAfectadas = cs.executeUpdate();
 			this.cerrarConexion();
 			return filasAfectadas;
