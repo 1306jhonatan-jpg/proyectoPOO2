@@ -136,6 +136,7 @@ if(nombreUsuario == null) {
     </div>
 
     <!-- Botones del menú -->
+   
     <div class="nav-item">
         <a class="<%= currentUrl.contains("inicio") ? "active" : "" %>" 
            href="<%=contextPath%>/inicio.jsp">
@@ -143,13 +144,14 @@ if(nombreUsuario == null) {
         </a>
     </div>
 
+ <% if(esAdmin) { %>
 	        <div class="nav-item">
         <a class="<%= currentUrl.toLowerCase().contains("usuarios") ? "active" : "" %>"
            href="<%=contextPath%>/UsuariosController?op=listar">
            <i class="fas fa-user"></i> Usuarios
         </a>
     </div>
-    
+    <% } %>
     <div class="nav-item">
         <a class="<%= currentUrl.toLowerCase().contains("reserva") ? "active" : "" %>"
            href="<%=contextPath%>/ToursController?op=listarTours">
@@ -188,13 +190,13 @@ if(nombreUsuario == null) {
     <% if(esAdmin) { %>
     <div class="nav-item">
         <a class="<%= currentUrl.toLowerCase().contains("reportes") ? "active" : "" %>"
-           href="<%=contextPath%>/reportes.jsp">
+           href="<%=contextPath%>/reporteControllers?op=reporteTours">
            <i class="fas fa-chart-line"></i> Reportes
         </a>
     </div>
     <% } %>
 
-    <!-- Usuario al final -->
+  <!-- Usuario al final -->
     <div class="user-box" onclick="toggleUserMenu()">
         <i class="fas fa-user-circle"></i> <%= nombreUsuario %>
         <% if(esAdmin){ %>
