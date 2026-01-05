@@ -175,6 +175,13 @@ if(nombreUsuario == null) {
            <i class="fas fa-user"></i> Guias
         </a>
     </div>
+    
+    <div class="nav-item">
+        <a class="<%= currentUrl.contains("calendario") ? "active" : "" %>" 
+           href="<%=contextPath%>/ReservaController?op=calendario">
+           <i class="fas fa-calendar"></i> Calendario
+        </a>
+    </div>
 
     <% if(esAdmin) { %>
     <div class="nav-item">

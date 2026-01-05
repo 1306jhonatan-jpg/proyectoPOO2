@@ -44,13 +44,13 @@ List<ClienteCargo> listaClientes = (List<ClienteCargo>) request.getAttribute("li
             <label>Precio Adulto (S/.)</label>
             <input type="number" class="form-control"
                    name="precioAdulto" id="precioAdulto"
-                   value="0" required>
+                   value="0" min="30" required>
         </div>
         <div class="col-md-6">
             <label>Precio Niño (S/.)</label>
             <input type="number" class="form-control"
                    name="precioNino" id="precioNino"
-                   value="0" required>
+                   value="0" min="30" required>
         </div>
     </div>
 

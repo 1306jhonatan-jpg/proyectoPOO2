@@ -101,4 +101,32 @@ public class ReservaModel extends Conexion{
             return 0;
         }
     }
+    
+    /**
+     * Listar calendario
+     */
+    
+    public List<Reserva> listarCalendario(){
+    	try {
+			ArrayList<Reserva> reserva = new ArrayList<>();
+			String sql = "CALL sp_calendario()";
+			this.abrirConexion();
+			cs = conexion.prepareCall(sql);
+			rs = cs.executeQuery();
+			while(rs.next()) {
+				Reserva res = new Reserva();
+				res.setIdreserva(rs.getInt("idreserva"));
+				res.setFechaReserva(rs.getDate("fecha_reserva"));
+				res.setPersonas(rs.getInt("personas"));;
+				res.setNombreTour(rs.getString("nombre_tours"));
+				reserva.add(res);
+			}
+			this.cerrarConexion();
+			return reserva;
+		} catch (Exception e) {
+			e.printStackTrace();
+            this.cerrarConexion();
+            return null;
+		}
+    }
 }

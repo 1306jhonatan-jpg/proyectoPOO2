@@ -78,6 +78,14 @@ public class ReservaController extends HttpServlet {
 			eliminar(request, response);
 			break;
 			
+			case "listarEventosCalendario":
+			    listarEventosCalendario(request, response);
+			    break;
+
+			case "calendario":
+			    mostrarVistaCalendario(request, response);
+			    break;
+
 		default:
 			listar(request, response);
 			break;
@@ -93,6 +101,15 @@ public class ReservaController extends HttpServlet {
 			Logger.getLogger(ReservaController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
+	
+	private void mostrarVistaCalendario(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
+
+	    response.setContentType("text/html; charset=UTF-8");
+	    request.getRequestDispatcher("/reserva/calendario.jsp")
+	           .forward(request, response);
+	}
+
 	
 	private void cargarFormularioNuevo(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -187,6 +204,39 @@ public class ReservaController extends HttpServlet {
 		}
 		listar(request, response);
 	}
+	
+	private void listarEventosCalendario(HttpServletRequest request, HttpServletResponse response)
+	        throws IOException {
+
+	    ReservaModel model = new ReservaModel();
+	    List<Reserva> lista = model.listarCalendario();
+
+	    response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+
+	    PrintWriter out = response.getWriter();
+	    out.print("[");
+
+	    for (int i = 0; i < lista.size(); i++) {
+	        Reserva r = lista.get(i);
+
+	        out.print("{");
+	        out.print("\"id\":\"" + r.getIdreserva() + "\",");
+	        out.print("\"title\":\"" + r.getNombreTour() + "\",");
+	        out.print("\"start\":\"" + r.getFechaReserva() + "\",");
+	        out.print("\"backgroundColor\":\"#2e7d32\",");
+	        out.print("\"borderColor\":\"#1b5e20\",");
+	        out.print("\"extendedProps\":{");
+	        out.print("\"personas\":\"" + r.getPersonas() + "\"");
+	        out.print("}");
+	        out.print("}");
+
+	        if (i < lista.size() - 1) out.print(",");
+	    }
+
+	    out.print("]");
+	}
+
 	
 	private void enviarJSON(HttpServletResponse response, boolean success, String mensaje) {
 		try {
