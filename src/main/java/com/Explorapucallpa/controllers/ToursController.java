@@ -96,7 +96,7 @@ public class ToursController extends HttpServlet {
 	private void listarTours(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			response.setContentType("text/html; charset=UTF-8");
-			request.setAttribute("listaTours", modelo.listarTours());
+			request.setAttribute("listaTours", modelo.listarToursActivos());
 			request.getRequestDispatcher("/tours/vistaCarrusel.jsp").forward(request, response);
 		} catch (Exception e) {
 			Logger.getLogger(ToursController.class.getName()).log(Level.SEVERE, null, e);

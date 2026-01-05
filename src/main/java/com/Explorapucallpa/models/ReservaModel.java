@@ -1,6 +1,7 @@
 package com.Explorapucallpa.models;
 
 import java.sql.CallableStatement;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -119,6 +120,7 @@ public class ReservaModel extends Conexion{
 				res.setFechaReserva(rs.getDate("fecha_reserva"));
 				res.setPersonas(rs.getInt("personas"));;
 				res.setNombreTour(rs.getString("nombre_tours"));
+				res.setNombreGuia(rs.getString("nombre_guia"));
 				reserva.add(res);
 			}
 			this.cerrarConexion();
@@ -129,4 +131,25 @@ public class ReservaModel extends Conexion{
             return null;
 		}
     }
+    
+    public boolean guiaDisponible(int idGuia, Date fecha) {
+        try{
+        	String sql = "CALL sp_guia_disponible(?, ?)";
+        	this.abrirConexion();
+        	cs = conexion.prepareCall(sql);
+        	
+            cs.setInt(1, idGuia);
+            cs.setDate(2, fecha);
+
+            rs = cs.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total") == 0;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

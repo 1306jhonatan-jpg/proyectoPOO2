@@ -155,9 +155,25 @@ public class ReservaController extends HttpServlet {
 			double total = (r.getCantidadAdulto() * r.getPrecioAdulto()) + (r.getCantidadNino() * r.getPrecioNino());
 			r.setTotalReserva(total);
 			r.setToursIdtours(Integer.parseInt(request.getParameter("toursIdtours")));
-			r.setGuiaIdguia(Integer.parseInt(request.getParameter("guiaIdguia")));
+			int idGuia = Integer.parseInt(request.getParameter("guiaIdguia"));
+			r.setGuiaIdguia(idGuia);
 			r.setPagoIdpago(Integer.parseInt(request.getParameter("pagoIdpago")));
 			r.setClienteIdcliente(Integer.parseInt(request.getParameter("clienteIdcliente")));
+			//validacion de guia disponible
+			if (!model.guiaDisponible(idGuia, r.getFechaReserva())) {
+
+	            if (esAjax) {
+	                enviarJSON(response, false,
+	                        "El guía ya tiene una reserva en esta fecha");
+	            } else {
+	                request.getSession().setAttribute(
+	                        "mensaje",
+	                        "El guía ya tiene una reserva en esta fecha"
+	                );
+	                cargarFormularioNuevo(request, response);
+	            }
+	            return; // ⛔ DETIENE EL GUARDADO
+	        }
 			boolean resultado = model.insertarReserva(r);
 			if (esAjax) {
 				enviarJSON(response, resultado,
@@ -227,7 +243,8 @@ public class ReservaController extends HttpServlet {
 	        out.print("\"backgroundColor\":\"#2e7d32\",");
 	        out.print("\"borderColor\":\"#1b5e20\",");
 	        out.print("\"extendedProps\":{");
-	        out.print("\"personas\":\"" + r.getPersonas() + "\"");
+	        out.print("\"personas\":" + r.getPersonas() + ",");
+	        out.print("\"guia\":\"" + r.getNombreGuia() + "\"");
 	        out.print("}");
 	        out.print("}");
 
@@ -236,6 +253,7 @@ public class ReservaController extends HttpServlet {
 
 	    out.print("]");
 	}
+
 
 	
 	private void enviarJSON(HttpServletResponse response, boolean success, String mensaje) {

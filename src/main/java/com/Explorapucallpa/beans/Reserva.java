@@ -17,6 +17,7 @@ public class Reserva {
 	    private int clienteIdcliente;
 	    private String nombreTour;
 	    private int personas;
+	    private String nombreGuia;
 		public Reserva() {
 			super();
 		}
@@ -113,6 +114,12 @@ public class Reserva {
 		}
 		public void setPersonas(int personas) {
 			this.personas = personas;
+		}
+		public String getNombreGuia() {
+			return nombreGuia;
+		}
+		public void setNombreGuia(String nombreGuia) {
+			this.nombreGuia = nombreGuia;
 		}
 	    
 	    

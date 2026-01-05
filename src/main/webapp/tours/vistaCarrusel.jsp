@@ -50,18 +50,18 @@ tbody tr:hover{
 </style>
 <style>
 .card-tour {
-    height: 580px;
+    height: 650px;
     border-radius: 12px;
     overflow: hidden;
 }
 
 .card-tour img {
-    height: 220px;
+    height: 250px;
     object-fit: cover;
 }
 
 .card-body-tour {
-    height: 230px;
+    height: 300px;
     overflow: hidden;
 }
 

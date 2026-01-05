@@ -58,7 +58,7 @@ p {
 
 .carousel-img {
 	width: 100%;
-	height: 450px;
+	height: 600px;
 	object-fit: cover;
 	border-radius: 12px;
 	border: 2px solid rgba(255, 255, 255, 0.8);
@@ -137,6 +137,10 @@ p {
 						data-bs-slide-to="1"></button>
 					<button type="button" data-bs-target="#carouselInicio"
 						data-bs-slide-to="2"></button>
+						<button type="button" data-bs-target="#carouselInicio"
+						data-bs-slide-to="3"></button>
+						<button type="button" data-bs-target="#carouselInicio"
+						data-bs-slide-to="4"></button>
 				</div>
 
 				<div class="carousel-inner">
@@ -150,7 +154,7 @@ p {
 					</div>
 
 					<div class="carousel-item">
-						<img src="<%=contextPath%>/img/laguna_yarina.png"
+						<img src="<%=contextPath%>/img/yarina.jpeg"
 							class="carousel-img">
 						<div class="carousel-caption">
 							<h2 class="texto-slide">Laguna Yarinacocha</h2>
@@ -158,13 +162,28 @@ p {
 					</div>
 
 					<div class="carousel-item">
-						<img src="<%=contextPath%>/img/velo_novia.png"
+						<img src="<%=contextPath%>/img/EL_VELO_DE_NOVIA_AMAZONAS_PERU.jpg"
 							class="carousel-img">
 						<div class="carousel-caption">
 							<h2 class="texto-slide">Velo de la Novia</h2>
 						</div>
 					</div>
-
+	
+					<div class="carousel-item">
+						<img src="<%=contextPath%>/img/regalia.jpeg"
+							class="carousel-img">
+						<div class="carousel-caption">
+							<h2 class="texto-slide">Regalia</h2>
+						</div>
+					</div>
+					
+					<div class="carousel-item">
+						<img src="<%=contextPath%>/img/shanay.jpeg"
+							class="carousel-img">
+						<div class="carousel-caption">
+							<h2 class="texto-slide">Shanay Timpishka</h2>
+						</div>
+					</div>
 				</div>
 
 			

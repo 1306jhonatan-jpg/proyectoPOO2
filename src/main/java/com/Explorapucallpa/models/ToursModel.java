@@ -46,6 +46,38 @@ public class ToursModel extends Conexion{
     }
     
     /**
+     * Lista todos los tours ACTIVOS
+     */
+    public List<Tours> listarToursActivos(){
+    	try {
+			ArrayList<Tours> tours = new ArrayList<>();
+			String sql = "CALL sp_listarToursActivos()";
+			this.abrirConexion();
+            cs = conexion.prepareCall(sql);
+            rs = cs.executeQuery();
+            while (rs.next()) {
+            	Tours tour = new Tours();
+            	tour.setIdTours(rs.getInt("idtours"));
+            	tour.setNombreTours(rs.getString("nombre_tours"));
+            	tour.setDescripcion(rs.getString("descripcion"));
+            	tour.setServicios(rs.getString("servicios"));
+               	tour.setDuracionTours(rs.getString("duracion_tours"));
+            	tour.setEstado(rs.getString("estado"));
+            	tour.setFechaCreacionTours(rs.getDate("fecha_creacion_tours"));
+            	tour.setImagen(rs.getString("imagen"));
+            	tours.add(tour);
+            	
+            }
+            this.cerrarConexion();
+            return tours;
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.cerrarConexion();
+			return null;
+		}
+    }
+    
+    /**
      * Inserta un nuevo tour
      */
     public int insertarTour(Tours tour ) {
